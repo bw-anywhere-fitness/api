@@ -6,8 +6,8 @@ const router = express.Router();
 const bcrypt = require("bcryptjs");
 
 router.post("/register", (req, res) => {
-  const { username, password, instructor } = req.body;
-  if (username && password && instructor) {
+  const { username, password } = req.body;
+  if (username && password) {
     req.body.password = bcrypt.hashSync(req.body.password, 8);
     users
       .add(req.body)
