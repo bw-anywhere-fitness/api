@@ -4,7 +4,7 @@
     "server": "nodemon index.js"
   },
   "dependencies": {
-    "bcrypt": "^3.0.6",
+    "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "express": "^4.17.0",
     "helmet": "^3.18.0",
