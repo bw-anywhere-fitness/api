@@ -7,7 +7,7 @@ exports.up = function(knex, Promise) {
       .unique();
     tbl.string("password").notNullable;
     tbl.boolean("instructor").notNullable();
-    tbl.timestamps();
+    tbl.timestamps(true, true);
   });
 };
 

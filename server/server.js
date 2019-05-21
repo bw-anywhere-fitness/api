@@ -4,6 +4,7 @@ const helmet = require("helmet");
 
 const usersRouter = require("../users/users-router");
 const authRouter = require("../auth/auth-router");
+const classesRouter = require("../classes/classes-router");
 
 const server = express();
 
@@ -17,5 +18,6 @@ server.get("/", (req, res) => {
 
 server.use("/users", usersRouter);
 server.use("/auth", authRouter);
+server.use("/classes", classesRouter);
 
 module.exports = server;
