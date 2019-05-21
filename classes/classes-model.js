@@ -7,6 +7,7 @@ module.exports = {
   getClassesByUser,
   getUsersByClass,
   addClass,
+  addUserToClass,
   removeClass
 };
 
@@ -29,7 +30,8 @@ function getClassesByInstructor(id) {
       "users.username",
       "classes.schedule",
       "classes.location",
-      "classes.image"
+      "classes.image",
+      "classes.id"
     )
 
     .where({ instructor_id: id });
@@ -65,4 +67,14 @@ function removeClass(id) {
     .where({ id: id })
     .first()
     .del();
+}
+function addUserToClass(classId, user_id) {
+  return db("users_classes")
+    .insert({ class_id: classId, user_id: user_id })
+    .then(count => {
+      getClassesByUser(user_id).then(classes => {
+        // console.log(classes);
+        return classes;
+      });
+    });
 }

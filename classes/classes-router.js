@@ -28,6 +28,7 @@ router.get("/:id/list", restricted, instructor, (req, res) => {
         .json({ message: "error getting users for this class", err });
     });
 });
+////GET Class by ID
 router.get("/:id", restricted, (req, res) => {
   classes
     .getClassById(req.params.id)
@@ -38,6 +39,22 @@ router.get("/:id", restricted, (req, res) => {
       res.status(500).json({ message: "error getting class by ID", err });
     });
 });
+//////ADD USER to Class by Class ID -> Takes class ID from Reqs and User ID from Token
+// router.post("/add/:id", restricted, (req, res) => {
+//   const class_id = req.params.id;
+//   const user_id = req.decodedJwt.subject;
+//   classes
+//     .addUserToClass(class_id, user_id)
+//     .then(classes => {
+//       console.log(classes);
+//       res.status(201).json(classes);
+//     })
+//     .catch(err => {
+//       res.status(500).json({ message: "error adding client to class", err });
+//     });
+// });
+
+/////GET Classes by instructor ID -> Returns All Class for Instructor
 router.get("/instructor/:id", restricted, (req, res) => {
   classes
     .getClassesByInstructor(req.params.id)
@@ -50,6 +67,7 @@ router.get("/instructor/:id", restricted, (req, res) => {
         .json({ message: "error getting classes by instructor", err });
     });
 });
+////GET ALL Classes by Client ID
 router.get("/client/:id", restricted, (req, res) => {
   classes
     .getClassesByUser(req.params.id)
