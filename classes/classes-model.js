@@ -8,7 +8,8 @@ module.exports = {
   getUsersByClass,
   addClass,
   addUserToClass,
-  removeClass
+  removeClass,
+  removdeUserFromClass
 };
 
 function getClasses() {
@@ -66,15 +67,25 @@ function removeClass(id) {
   return db("classes")
     .where({ id: id })
     .first()
-    .del();
+    .del()
+    .then(count => {
+      return getClasses().then(classes => {
+        return classes;
+      });
+    });
 }
 function addUserToClass(classId, user_id) {
   return db("users_classes")
     .insert({ class_id: classId, user_id: user_id })
     .then(count => {
-      getClassesByUser(user_id).then(classes => {
-        // console.log(classes);
+      return getClassesByUser(user_id).then(classes => {
         return classes;
       });
     });
+}
+function removdeUserFromClass(classId, user_id) {
+  return db("users_classes")
+    .where({ class_id: classId, user_id: user_id })
+    .first()
+    .del();
 }

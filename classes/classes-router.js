@@ -40,19 +40,21 @@ router.get("/:id", restricted, (req, res) => {
     });
 });
 //////ADD USER to Class by Class ID -> Takes class ID from Reqs and User ID from Token
-// router.post("/add/:id", restricted, (req, res) => {
-//   const class_id = req.params.id;
-//   const user_id = req.decodedJwt.subject;
-//   classes
-//     .addUserToClass(class_id, user_id)
-//     .then(classes => {
-//       console.log(classes);
-//       res.status(201).json(classes);
-//     })
-//     .catch(err => {
-//       res.status(500).json({ message: "error adding client to class", err });
-//     });
-// });
+router.post("/add/:id", restricted, (req, res) => {
+  const class_id = req.params.id;
+  const user_id = req.decodedJwt.subject;
+  classes
+    .addUserToClass(class_id, user_id)
+    .then(classes => {
+      console.log("CLASSES: ", classes);
+      res.status(201).json(classes);
+    })
+    .catch(err => {
+      res.status(500).json({ message: "error adding client to class", err });
+    });
+});
+//////REMOVE USER from class by Class ID
+router.delete("/remove/:id", restricted, (req, res) => {});
 
 /////GET Classes by instructor ID -> Returns All Class for Instructor
 router.get("/instructor/:id", restricted, (req, res) => {
@@ -118,9 +120,9 @@ router.delete("/:id", restricted, instructor, async (req, res) => {
     if (findClass === req.decodedJwt.subject) {
       classes
         .removeClass(req.params.id)
-        .then(count => {
-          if (count) {
-            res.status(200).json({ message: "class deleted" });
+        .then(classes => {
+          if (classes) {
+            res.status(200).json(classes);
           } else {
             res.status(404).json({ message: "class does not exist" });
           }
