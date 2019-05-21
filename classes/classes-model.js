@@ -5,7 +5,8 @@ module.exports = {
   getClassById,
   getClassesByInstructor,
   getClassesByUser,
-  addClass
+  addClass,
+  removeClass
 };
 
 function getClasses() {
@@ -44,13 +45,17 @@ function getClassesByUser(id) {
     );
 }
 function addClass(classObj) {
-  console.log(classObj);
   return db("classes")
     .insert(classObj)
     .then(id => {
-      console.log("ID: ", id);
       return db("classes")
         .where({ id: id[0] })
         .first();
     });
+}
+function removeClass(id) {
+  return db("classes")
+    .where({ id: id })
+    .first()
+    .del();
 }
