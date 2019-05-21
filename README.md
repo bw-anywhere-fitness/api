@@ -73,3 +73,18 @@ Heroku deployment https://anywhere-fitness.herokuapp.com/
 	"location": "201 Baker St"
 }
 ```
+#### DELETE Class
+`https://anywhere-fitness.herokuapp.com/classes/client/:id`
+
+On Success
+```
+{
+  "message": "class deleted"
+}
+```
+On Failure
+```
+{
+  "message": "error removing class either not authorized or class does not exist"
+}
+```
