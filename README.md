@@ -28,6 +28,7 @@ Heroku deployment https://anywhere-fitness.herokuapp.com/
 ```
 {
   "id": 3,
+  "instructor": "false"
   "token": "eyJhbGciOiJ3ODQ0MX0.6es5Q9hZJw5U8a5EyWucbMM60xRoGX5_U3kQQ5BVPH0"
 }
 ```
@@ -56,6 +57,22 @@ Heroku deployment https://anywhere-fitness.herokuapp.com/
   ```
 #### GET Classes by ID  
 `https://anywhere-fitness.herokuapp.com/classes/:id`
+
+
+#### GET Clients by Class ID
+`https://anywhere-fitness.herokuapp.com/classes/:id/list`
+
+On Success Returns Array of Users
+
+```
+[
+  {
+    "id": 2,
+    "username": "workout_warrior_1",
+    "uses_remaining": 10
+  }
+]
+```
 
 #### GET Classes by Instructor
 `https://anywhere-fitness.herokuapp.com/classes/instructor/:id`
