@@ -91,7 +91,7 @@ On Success Returns Array of Users
 }
 ```
 #### DELETE Class
-`https://anywhere-fitness.herokuapp.com/classes/client/:id`
+`https://anywhere-fitness.herokuapp.com/classes/:id`
 
 On Success
 ```
