@@ -15,6 +15,10 @@ exports.up = function(knex, Promise) {
       .inTable("classes")
       .onUpdate("CASCADE")
       .onDelete("RESTRICT");
+    tbl
+      .integer("uses_remaining")
+      .defaultTo(10)
+      .notNullable();
   });
 };
 

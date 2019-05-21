@@ -5,6 +5,7 @@ module.exports = {
   getClassById,
   getClassesByInstructor,
   getClassesByUser,
+  getUsersByClass,
   addClass,
   removeClass
 };
@@ -43,6 +44,12 @@ function getClassesByUser(id) {
       "classes.location",
       "classes.image"
     );
+}
+function getUsersByClass(id) {
+  return db("users_classes")
+    .where({ class_id: id })
+    .innerJoin("users", "users.id", "users_classes.user_id")
+    .select("users.id", "users.username", "users_classes.uses_remaining");
 }
 function addClass(classObj) {
   return db("classes")

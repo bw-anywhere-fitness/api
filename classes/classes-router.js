@@ -14,6 +14,20 @@ router.get("/", restricted, (req, res) => {
       res.status(500).json({ message: "error getting classes", err });
     });
 });
+///GET USERS BY CLASS
+router.get("/:id/list", restricted, instructor, (req, res) => {
+  classes
+    .getUsersByClass(req.params.id)
+    .then(users => {
+      console.log("USERS LIST: ", users);
+      res.status(200).json(users);
+    })
+    .catch(err => {
+      res
+        .status(500)
+        .json({ message: "error getting users for this class", err });
+    });
+});
 router.get("/:id", restricted, (req, res) => {
   classes
     .getClassById(req.params.id)
