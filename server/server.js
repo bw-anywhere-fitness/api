@@ -1,15 +1,26 @@
-const express = require('express')
-const cors =  require('cors')
-const helmet = require('helmet')
+const express = require("express");
+const cors = require("cors");
+const helmet = require("helmet");
 
-const server = express()
+const usersRouter = require("../users/users-router");
+const authRouter = require("../auth/auth-router");
+const classesRouter = require("../classes/classes-router");
 
-server.use(express.json())
-server.use(cors())
-server.use(helmet())
+const restricted = require("../auth/restricted-middleware");
+const instructor = require("../auth/instructor-only");
 
-server.get('/',(req,res) =>{
-  res.send('API CONNECTED')
-})
+const server = express();
 
-module.exports = server
+server.use(express.json());
+server.use(cors());
+server.use(helmet());
+
+server.get("/", (req, res) => {
+  res.status(200).json({ api: "connected" });
+});
+
+server.use("/users", restricted, instructor, usersRouter);
+server.use("/auth", authRouter);
+server.use("/classes", classesRouter);
+
+module.exports = server;
