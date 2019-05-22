@@ -54,8 +54,34 @@ router.post("/add/:id", restricted, (req, res) => {
     });
 });
 //////REMOVE USER from class by Class ID
-router.delete("/remove/:id", restricted, (req, res) => {});
-
+router.delete("/remove/:id", restricted, (req, res) => {
+  classes
+    .removdeUserFromClass(req.params.id, req.decodedJwt.subject)
+    .then(classes => {
+      res.status(200).json(classes);
+    })
+    .catch(err => {
+      res.status(500).json({ message: "error removing user from class" });
+    });
+});
+/////PUT Update Client Uses Remaining by Class ID
+router.put("/:id/list/update", restricted, (req, res) => {
+  const { user_id, uses_remaining } = req.body;
+  if (user_id && uses_remaining) {
+    classes
+      .updateClassUses(req.params.id, user_id, req.body)
+      .then(classes => {
+        res.status(200).json(classes);
+      })
+      .catch(err => {
+        res.status(500).json({ message: "error updating uses" });
+      });
+  } else {
+    res
+      .status(400)
+      .json({ message: "bad request, user_id and uses_remaining is required" });
+  }
+});
 /////GET Classes by instructor ID -> Returns All Class for Instructor
 router.get("/instructor/:id", restricted, (req, res) => {
   classes
@@ -69,7 +95,28 @@ router.get("/instructor/:id", restricted, (req, res) => {
         .json({ message: "error getting classes by instructor", err });
     });
 });
-////GET ALL Classes by Client ID
+/////// DELETE Class by Instructor
+router.delete("/instructor/:id/remove", restricted, (req, res) => {
+  if (Number(req.params.id) === Number(req.decodedJwt.subject)) {
+    classes
+      .removeClassesByInstructor(req.params.id, req.body.id)
+      .then(classes => {
+        if (!classes) {
+          res.status(404).json({ message: "class does not exist" });
+        } else {
+          res.status(200).json(classes);
+        }
+      })
+      .catch(err => {
+        res
+          .status(500)
+          .json({ message: "error getting classes by instructor", err });
+      });
+  } else {
+    res.status(403).json({ message: "not authorized to delete this class" });
+  }
+});
+////GET ALL Classes For Client by Client ID
 router.get("/client/:id", restricted, (req, res) => {
   classes
     .getClassesByUser(req.params.id)
