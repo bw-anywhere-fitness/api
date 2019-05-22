@@ -76,6 +76,26 @@ On Success Returns Array of Users
 
 #### GET Classes by Instructor
 `https://anywhere-fitness.herokuapp.com/classes/instructor/:id`
+```
+[
+  {
+    "name": "CrossFit",
+    "username": "instructor",
+    "schedule": "Thursday & Saturday 11:00 AM",
+    "location": "123 Main Street",
+    "image": null,
+    "id": 1
+  },
+  {
+    "name": "Yoga",
+    "username": "instructor",
+    "schedule": "Sunday 9:00 AM",
+    "location": "1600 Fox Drive",
+    "image": null,
+    "id": 3
+  }
+]
+```
 
 #### GET Classes by Client
 `https://anywhere-fitness.herokuapp.com/classes/client/:id`
@@ -93,6 +113,8 @@ On Success Returns Array of Users
 #### DELETE Class
 `https://anywhere-fitness.herokuapp.com/classes/:id`
 
+Returns an Array of All Classes Remaining
+
 On Success
 ```
 {
@@ -103,5 +125,44 @@ On Failure
 ```
 {
   "message": "error removing class either not authorized or class does not exist"
+}
+```
+
+#### DELETE Class By Instructor ID
+`https://anywhere-fitness.herokuapp.com/classes/instructor/:id/remove`
+
+Send the Class You Want to Delete in the Body of the Request
+
+```
+{
+	"id": 4
+}
+```
+
+Returns an Array of All Classes By Instructor
+
+```
+[
+  {
+    "name": "CrossFit",
+    "username": "instructor",
+    "schedule": "Thursday & Saturday 11:00 AM",
+    "location": "123 Main Street",
+    "image": null,
+    "id": 1
+  }
+]
+```
+
+#### PUT Update Uses Remaining By Class ID
+`https://anywhere-fitness.herokuapp.com/classes/:id/update`
+
+
+Send `user_id` and `uses_remaining`in the Body of the Request
+
+```
+{
+	"user_id": 4,
+	"uses_remaining": 8
 }
 ```
